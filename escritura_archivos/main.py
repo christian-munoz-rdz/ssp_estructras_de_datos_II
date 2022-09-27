@@ -1,5 +1,5 @@
 def encode(nombreArchivo):
-    letters = "bcdefghijklmnopqrstuvwxyza"
+    letters = "abcdefghijklmnopqrstuvwxyz"
     try:
         archivo = open(nombreArchivo,'r')
         caracter = archivo.read(1)
@@ -9,7 +9,7 @@ def encode(nombreArchivo):
                 try:
                     nuevo_texto += letters[letters.index(caracter)+1]
                 except IndexError:
-                    nuevo_texto += 'b'
+                    nuevo_texto += 'a'
             else:
                 nuevo_texto += caracter
             caracter = archivo.read(1)
@@ -22,9 +22,9 @@ def encode(nombreArchivo):
 def decode(archivo1,archivo2,texto):
     letters = "abcdefghijklmnopqrstuvwxyz"
     try:
-        codificado = open(archivo1,mode="a+",encoding="utf-8")
+        codificado = open(archivo1,mode="r+",encoding="utf-8")
         codificado.write(texto)
-        decodificado = open(archivo2,mode="a+",encoding="utf-8")
+        decodificado = open(archivo2,mode="r+",encoding="utf-8")
         texto_decodificado = ""
         for i in range(len(texto)):
             caracter = texto[i]
@@ -45,6 +45,10 @@ def decode(archivo1,archivo2,texto):
 def main():
     texto_encriptado = encode("original.txt")
     decode("codificado.txt","decodificado.txt",texto_encriptado)
+    original = open("original.txt",mode="r",encoding="utf-8")
+    decodificado = open("decodificado.txt",mode="r",encoding="utf-8")
+    if original.read() == decodificado.read():
+        print("El archivo se ha decodificado correctamente")
 
 if __name__ == "__main__":
     main()
